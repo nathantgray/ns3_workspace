@@ -116,7 +116,11 @@ if [[ ! -d "$NS3_LIBEXEC_DIR" ]]; then
   exit 1
 fi
 
+if [[ ! -e "$NS3_LIBEXEC_DIR/tap-creator" ]]; then
+    ln -s ns3.44-tap-creator "$NS3_LIBEXEC_DIR/tap-creator"
+fi
+
 echo "Starting example.py..."
 export LD_LIBRARY_PATH="$NS3_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export PATH="$NS3_LIBEXEC_DIR:$PATH"
 "$PYTHON_BIN" "$EXAMPLE_SCRIPT"
-
