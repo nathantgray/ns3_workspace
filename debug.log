@@ -1,0 +1,248 @@
+Debug run started at 2026-05-11T22:50:26+00:00
+Log file: /home/ubuntu/ns3_workspace/debug_tap_creator.log
+
+================================================================
+  1. ENVIRONMENT
+================================================================
+
+--- Effective user ---
+uid=0(root) gid=0(root) groups=0(root)
+
+--- PATH ---
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+
+--- Working directory ---
+/home/ubuntu/ns3_workspace
+
+--- Kernel / OS ---
+Linux ns3-router 5.15.0-177-generic #187-Ubuntu SMP Sat Apr 11 22:54:33 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+
+================================================================
+  2. CPU FLAGS (relevant to illegal-instruction crashes)
+================================================================
+
+--- CPU model ---
+model name	: AMD EPYC 7662 64-Core Processor
+
+--- Virtualisation ---
+kvm
+
+--- Selected CPU flags ---
+aes
+avx
+avx2
+bmi1
+bmi2
+sse4_1
+sse4_2
+sse4a
+
+================================================================
+  3. PYTHON INTERPRETER
+================================================================
+
+--- Interpreter path and version ---
+Python 3.12.13
+/home/ubuntu/ns3_workspace/.venv/bin/python
+
+--- ns3 package location ---
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "<frozen posixpath>", line 181, in dirname
+TypeError: expected str, bytes or os.PathLike object, not NoneType
+ERROR: could not import ns3
+
+================================================================
+  4. TAP-CREATOR BINARY
+================================================================
+
+--- Contents of libexec/ns3 ---
+total 148
+drwxrwxr-x 2 ubuntu ubuntu  4096 May 11 22:21 .
+drwxrwxr-x 3 ubuntu ubuntu  4096 May 11 22:09 ..
+-rwxrwxr-x 2 ubuntu ubuntu 43704 May  5 22:39 ns3.44-raw-sock-creator
+-rwxrwxr-x 2 ubuntu ubuntu 43040 May  5 22:39 ns3.44-tap-creator
+-rwxrwxr-x 2 ubuntu ubuntu 51504 May  5 22:39 ns3.44-tap-device-creator
+lrwxrwxrwx 1 root   root      18 May 11 22:21 tap-creator -> ns3.44-tap-creator
+
+--- Expected binary path ---
+/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/ns3.44-tap-creator
+
+--- Binary exists / executable? ---
+EXISTS: yes
+EXECUTABLE: yes
+
+--- ELF / file type ---
+/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/ns3.44-tap-creator: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=af6f1d5d08e31321ac674e730c7a481e277ef8bf, for GNU/Linux 3.2.0, not stripped
+
+--- Linked libraries (ldd) ---
+	linux-vdso.so.1 (0x00007fff20ab8000)
+	libns3.44-network.so => not found
+	libns3.44-core.so => not found
+	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f1f1a30a000)
+	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f1f1a0de000)
+	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f1f1a0bc000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f1f19e93000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f1f19dac000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f1f1a317000)
+
+--- Linux capabilities on binary ---
+
+--- Unversioned symlink (tap-creator) ---
+lrwxrwxrwx 1 root root 18 May 11 22:21 /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/tap-creator -> ns3.44-tap-creator
+
+================================================================
+  5. DIRECT EXECUTION OF TAP-CREATOR (exit code + strace)
+================================================================
+
+--- Direct execution (no arguments — expect usage error, not a crash) ---
+/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/ns3.44-tap-creator: error while loading shared libraries: libns3.44-network.so: cannot open shared object file: No such file or directory
+Exit code: 127
+
+--- strace of tap-creator (first 40 lines) ---
+execve("/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/ns3.44-tap-creator", ["/home/ubuntu/ns3_workspace/.venv"...], 0x7ffc32f7e6c0 /* 16 vars */) = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f1b71601000
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib/glibc-hwcaps/x86-64-v3/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib/glibc-hwcaps/x86-64-v2/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib/tls/x86_64/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib/tls/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib/tls/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib/tls/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib/x86_64/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/glibc-hwcaps/x86-64-v3/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/glibc-hwcaps/x86-64-v2/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/tls/x86_64/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/tls/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/tls/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/tls/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/x86_64/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/../lib/glibc-hwcaps/x86-64-v3/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/../lib/glibc-hwcaps/x86-64-v2/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/../lib/tls/x86_64/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/../lib/tls/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/../lib/tls/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/../lib/tls/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/../lib/x86_64/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/../lib/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/../lib/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/../lib/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib64/glibc-hwcaps/x86-64-v3/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib64/glibc-hwcaps/x86-64-v2/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib64/tls/x86_64/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib64/tls/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib64/tls/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib64/tls/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib64/x86_64/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/gcl-builds/build/lib.linux-x86_64-cpython-312/ns3/lib64/x86_64/libns3.44-network.so", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+
+================================================================
+  6. SECURITY POLICIES
+================================================================
+
+--- AppArmor status ---
+apparmor module is loaded.
+40 profiles are loaded.
+40 profiles are in enforce mode.
+   /snap/snapd/26382/usr/lib/snapd/snap-confine
+   /snap/snapd/26382/usr/lib/snapd/snap-confine//mount-namespace-capture-helper
+   /snap/snapd/26865/usr/lib/snapd/snap-confine
+   /usr/bin/man
+   /usr/lib/NetworkManager/nm-dhcp-client.action
+   /usr/lib/NetworkManager/nm-dhcp-helper
+   /usr/lib/connman/scripts/dhclient-script
+   /usr/lib/snapd/snap-confine
+   /usr/lib/snapd/snap-confine//mount-namespace-capture-helper
+   /{,usr/}sbin/dhclient
+   lsb_release
+   man_filter
+   man_groff
+   nvidia_modprobe
+   nvidia_modprobe//kmod
+   snap-update-ns.lxd
+   snap.lxd.activate
+
+--- Recent AppArmor / seccomp / audit denials (dmesg) ---
+[    5.192191] audit: type=1400 audit(1778537055.936:2): apparmor="STATUS" operation="profile_load" profile="unconfined" name="nvidia_modprobe" pid=526 comm="apparmor_parser"
+[    5.192197] audit: type=1400 audit(1778537055.936:3): apparmor="STATUS" operation="profile_load" profile="unconfined" name="nvidia_modprobe//kmod" pid=526 comm="apparmor_parser"
+[    5.192464] audit: type=1400 audit(1778537055.940:4): apparmor="STATUS" operation="profile_load" profile="unconfined" name="lsb_release" pid=525 comm="apparmor_parser"
+[    5.203688] audit: type=1400 audit(1778537055.944:5): apparmor="STATUS" operation="profile_load" profile="unconfined" name="ubuntu_pro_apt_news" pid=528 comm="apparmor_parser"
+[    5.203693] audit: type=1400 audit(1778537055.948:6): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/bin/man" pid=539 comm="apparmor_parser"
+[    5.203696] audit: type=1400 audit(1778537055.948:7): apparmor="STATUS" operation="profile_load" profile="unconfined" name="man_filter" pid=539 comm="apparmor_parser"
+[    5.203698] audit: type=1400 audit(1778537055.948:8): apparmor="STATUS" operation="profile_load" profile="unconfined" name="man_groff" pid=539 comm="apparmor_parser"
+[    5.204455] audit: type=1400 audit(1778537055.952:9): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/lib/NetworkManager/nm-dhcp-client.action" pid=527 comm="apparmor_parser"
+[    5.204458] audit: type=1400 audit(1778537055.952:10): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/lib/NetworkManager/nm-dhcp-helper" pid=527 comm="apparmor_parser"
+[    5.514152] kauditd_printk_skb: 14 callbacks suppressed
+[    5.514154] audit: type=1400 audit(1778537056.260:25): apparmor="STATUS" operation="profile_load" profile="unconfined" name="snap-update-ns.lxd" pid=565 comm="apparmor_parser"
+[    5.521796] audit: type=1400 audit(1778537056.268:26): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/snap/snapd/26382/usr/lib/snapd/snap-confine" pid=563 comm="apparmor_parser"
+[    5.521801] audit: type=1400 audit(1778537056.268:27): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/snap/snapd/26382/usr/lib/snapd/snap-confine//mount-namespace-capture-helper" pid=563 comm="apparmor_parser"
+[    5.526580] audit: type=1400 audit(1778537056.272:28): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/snap/snapd/26865/usr/lib/snapd/snap-confine" pid=564 comm="apparmor_parser"
+[    5.531667] audit: type=1400 audit(1778537056.276:29): apparmor="STATUS" operation="profile_load" profile="unconfined" name="snap.lxd.activate" pid=566 comm="apparmor_parser"
+[    5.532781] audit: type=1400 audit(1778537056.280:30): apparmor="STATUS" operation="profile_load" profile="unconfined" name="snap.lxd.benchmark" pid=567 comm="apparmor_parser"
+[    5.544614] audit: type=1400 audit(1778537056.292:31): apparmor="STATUS" operation="profile_load" profile="unconfined" name="snap.lxd.buginfo" pid=568 comm="apparmor_parser"
+[    5.548368] audit: type=1400 audit(1778537056.296:32): apparmor="STATUS" operation="profile_load" profile="unconfined" name="snap.lxd.check-kernel" pid=569 comm="apparmor_parser"
+[    5.560024] audit: type=1400 audit(1778537056.304:33): apparmor="STATUS" operation="profile_load" profile="unconfined" name="snap.lxd.hook.configure" pid=571 comm="apparmor_parser"
+[    5.562547] audit: type=1400 audit(1778537056.308:34): apparmor="STATUS" operation="profile_load" profile="unconfined" name="snap.lxd.daemon" pid=570 comm="apparmor_parser"
+
+--- Seccomp on current shell ---
+Seccomp:	0
+Seccomp_filters:	0
+
+================================================================
+  7. TAP DEVICES AND BRIDGES
+================================================================
+
+--- ip link (tap and bridge interfaces) ---
+3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel master br-tap1 state UP mode DEFAULT group default qlen 1000
+4: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel master br-tap2 state UP mode DEFAULT group default qlen 1000
+5: ens6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel master br-tap3 state UP mode DEFAULT group default qlen 1000
+9: br-tap1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+10: br-tap2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+11: br-tap3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+30: tap1: <NO-CARRIER,BROADCAST,MULTICAST,PROMISC,UP> mtu 1500 qdisc fq_codel master br-tap1 state DOWN mode DEFAULT group default qlen 1000
+31: tap2: <NO-CARRIER,BROADCAST,MULTICAST,PROMISC,UP> mtu 1500 qdisc fq_codel master br-tap2 state DOWN mode DEFAULT group default qlen 1000
+32: tap3: <NO-CARRIER,BROADCAST,MULTICAST,PROMISC,UP> mtu 1500 qdisc fq_codel master br-tap3 state DOWN mode DEFAULT group default qlen 1000
+
+--- bridge link ---
+3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br-tap1 state forwarding priority 32 cost 100 
+4: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br-tap2 state forwarding priority 32 cost 100 
+5: ens6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br-tap3 state forwarding priority 32 cost 100 
+30: tap1: <NO-CARRIER,BROADCAST,MULTICAST,PROMISC,UP> mtu 1500 master br-tap1 state disabled priority 32 cost 100 
+31: tap2: <NO-CARRIER,BROADCAST,MULTICAST,PROMISC,UP> mtu 1500 master br-tap2 state disabled priority 32 cost 100 
+32: tap3: <NO-CARRIER,BROADCAST,MULTICAST,PROMISC,UP> mtu 1500 master br-tap3 state disabled priority 32 cost 100 
+
+================================================================
+  8. LIBRARY PATH
+================================================================
+
+--- NS3_LIB_DIR contents (lib64) ---
+libns3.44-tap-bridge.so
+
+--- LD_LIBRARY_PATH that run_example.sh would set ---
+/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64
+
+================================================================
+  9. SUMMARY AND SUGGESTED FIXES
+================================================================
+No obvious issues detected — check strace output above for SIGILL/SIGSEGV
+
+================================================================
+Full log written to: /home/ubuntu/ns3_workspace/debug_tap_creator.log
+================================================================
