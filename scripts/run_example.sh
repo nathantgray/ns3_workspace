@@ -98,6 +98,7 @@ echo "$TAP3 <-> $BR3 <-> $PHY3"
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PYTHON_BIN="$ROOT_DIR/.venv/bin/python"
 NS3_LIB_DIR="$ROOT_DIR/.venv/lib/python3.12/site-packages/ns3/lib64"
+NS3_LIBEXEC_DIR="$ROOT_DIR/.venv/lib/python3.12/site-packages/ns3/libexec/ns3"
 EXAMPLE_SCRIPT="$ROOT_DIR/example.py"
 
 if [[ ! -x "$PYTHON_BIN" ]]; then
@@ -110,12 +111,13 @@ if [[ ! -f "$EXAMPLE_SCRIPT" ]]; then
   exit 1
 fi
 
-if [[ ! -d "$NS3_LIB_DIR" ]]; then
-  echo "ns-3 library directory not found: $NS3_LIB_DIR"
+if [[ ! -d "$NS3_LIBEXEC_DIR" ]]; then
+  echo "ns-3 libexec directory not found: $NS3_LIBEXEC_DIR"
   exit 1
 fi
 
 echo "Starting example.py..."
 env LD_LIBRARY_PATH="$NS3_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" \
+  PATH="$NS3_LIBEXEC_DIR${PATH:+:$PATH}" \
   "$PYTHON_BIN" "$EXAMPLE_SCRIPT"
 
