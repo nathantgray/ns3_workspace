@@ -1,27 +1,29 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Modern replacement for tunctl/ifconfig/brctl setup in example.cc
-# Creates TAP devices and Linux bridges, then attaches TAP + physical NIC.
+# Configure tap devices and bridges for example.py.
 
 if [[ ${EUID} -ne 0 ]]; then
   echo "Run as root: sudo $0"
   exit 1
 fi
 
-# Must match TapBridge device names in example.py/example.cc
-TAP_LEFT="mytap1"
-TAP_RIGHT="mytap2"
+# Must match TapBridge device names in example.py
+TAP1="tap1"
+TAP2="tap2"
+TAP3="tap3"
 
-# Bridge names
-BR_LEFT="mybridge"
-BR_RIGHT="yourbridge"
+# Bridge names for each external link
+BR1="br-tap1"
+BR2="br-tap2"
+BR3="br-tap3"
 
 # Physical interfaces to connect.
 # Override via environment, e.g.:
-#   sudo LEFT_PHY=eth0 RIGHT_PHY=eth1 ./scripts/setup_tap_bridges.sh
-LEFT_PHY="${LEFT_PHY:-eth0}"
-RIGHT_PHY="${RIGHT_PHY:-}"
+#   sudo PHY1=ens4 PHY2=ens5 PHY3=ens6 ./scripts/setup_tap_bridges.sh
+PHY1="${PHY1:-ens4}"
+PHY2="${PHY2:-ens5}"
+PHY3="${PHY3:-ens6}"
 
 iface_exists() {
   local iface="$1"
@@ -59,35 +61,39 @@ enslave_if_not_member() {
   ip link set dev "$iface" up
 }
 
-create_tap "$TAP_LEFT"
-create_tap "$TAP_RIGHT"
+create_tap "$TAP1"
+create_tap "$TAP2"
+create_tap "$TAP3"
 
-create_bridge "$BR_LEFT"
-create_bridge "$BR_RIGHT"
+create_bridge "$BR1"
+create_bridge "$BR2"
+create_bridge "$BR3"
 
-enslave_if_not_member "$TAP_LEFT" "$BR_LEFT"
-if iface_exists "$LEFT_PHY"; then
-  enslave_if_not_member "$LEFT_PHY" "$BR_LEFT"
+enslave_if_not_member "$TAP1" "$BR1"
+if iface_exists "$PHY1"; then
+  enslave_if_not_member "$PHY1" "$BR1"
 else
-  echo "Warning: LEFT_PHY '$LEFT_PHY' does not exist; left bridge will only contain $TAP_LEFT"
+  echo "Warning: PHY1 '$PHY1' does not exist; bridge $BR1 will only contain $TAP1"
 fi
 
-enslave_if_not_member "$TAP_RIGHT" "$BR_RIGHT"
-if iface_exists "$RIGHT_PHY"; then
-  enslave_if_not_member "$RIGHT_PHY" "$BR_RIGHT"
-elif [[ -n "$RIGHT_PHY" ]]; then
-  echo "Warning: RIGHT_PHY '$RIGHT_PHY' does not exist; right bridge will only contain $TAP_RIGHT"
+enslave_if_not_member "$TAP2" "$BR2"
+if iface_exists "$PHY2"; then
+  enslave_if_not_member "$PHY2" "$BR2"
 else
-  echo "Info: RIGHT_PHY not set; right bridge will only contain $TAP_RIGHT"
+  echo "Warning: PHY2 '$PHY2' does not exist; bridge $BR2 will only contain $TAP2"
+fi
+
+enslave_if_not_member "$TAP3" "$BR3"
+if iface_exists "$PHY3"; then
+  enslave_if_not_member "$PHY3" "$BR3"
+else
+  echo "Warning: PHY3 '$PHY3' does not exist; bridge $BR3 will only contain $TAP3"
 fi
 
 echo "Done."
-echo "$TAP_LEFT <-> $BR_LEFT <-> $LEFT_PHY"
-if [[ -n "$RIGHT_PHY" ]]; then
-  echo "$TAP_RIGHT <-> $BR_RIGHT <-> $RIGHT_PHY"
-else
-  echo "$TAP_RIGHT <-> $BR_RIGHT"
-fi
+echo "$TAP1 <-> $BR1 <-> $PHY1"
+echo "$TAP2 <-> $BR2 <-> $PHY2"
+echo "$TAP3 <-> $BR3 <-> $PHY3"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PYTHON_BIN="$ROOT_DIR/.venv/bin/python"
@@ -109,7 +115,6 @@ if [[ ! -d "$NS3_LIB_DIR" ]]; then
   exit 1
 fi
 
-# echo "Starting example.py..."
-# env LD_LIBRARY_PATH="$NS3_LIB_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" \
-#   "$PYTHON_BIN" "$EXAMPLE_SCRIPT"
+# This setup script only prepares networking. To run the simulation use
+# scripts/run_example.sh.
 

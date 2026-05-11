@@ -8,22 +8,29 @@ if [[ ${EUID} -ne 0 ]]; then
   exit 1
 fi
 
-TAP_LEFT="mytap1"
-TAP_RIGHT="mytap2"
-BR_LEFT="mybridge"
-BR_RIGHT="yourbridge"
-LEFT_PHY="enp3s0"
-RIGHT_PHY="enx7cc2c6331c3c"
+TAP1="tap1"
+TAP2="tap2"
+TAP3="tap3"
+BR1="br-tap1"
+BR2="br-tap2"
+BR3="br-tap3"
+PHY1="${PHY1:-ens4}"
+PHY2="${PHY2:-ens5}"
+PHY3="${PHY3:-ens6}"
 
-ip link set dev "$LEFT_PHY" nomaster 2>/dev/null || true
-ip link set dev "$RIGHT_PHY" nomaster 2>/dev/null || true
-ip link set dev "$TAP_LEFT" nomaster 2>/dev/null || true
-ip link set dev "$TAP_RIGHT" nomaster 2>/dev/null || true
+ip link set dev "$PHY1" nomaster 2>/dev/null || true
+ip link set dev "$PHY2" nomaster 2>/dev/null || true
+ip link set dev "$PHY3" nomaster 2>/dev/null || true
+ip link set dev "$TAP1" nomaster 2>/dev/null || true
+ip link set dev "$TAP2" nomaster 2>/dev/null || true
+ip link set dev "$TAP3" nomaster 2>/dev/null || true
 
-ip link del "$BR_LEFT" type bridge 2>/dev/null || true
-ip link del "$BR_RIGHT" type bridge 2>/dev/null || true
+ip link del "$BR1" type bridge 2>/dev/null || true
+ip link del "$BR2" type bridge 2>/dev/null || true
+ip link del "$BR3" type bridge 2>/dev/null || true
 
-ip link del "$TAP_LEFT" 2>/dev/null || true
-ip link del "$TAP_RIGHT" 2>/dev/null || true
+ip link del "$TAP1" 2>/dev/null || true
+ip link del "$TAP2" 2>/dev/null || true
+ip link del "$TAP3" 2>/dev/null || true
 
 echo "Teardown complete."
