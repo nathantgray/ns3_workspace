@@ -20,7 +20,7 @@ def main(argv):
     ns.GlobalValue.Bind("ChecksumEnabled", ns.BooleanValue(True))
 
     nodes = ns.NodeContainer()
-    nodes.Create(2)
+    nodes.Create(3)
 
     csma = ns.CsmaHelper()
     csma.SetChannelAttribute("DataRate", ns.DataRateValue(ns.DataRate(500000000)))
@@ -39,11 +39,14 @@ def main(argv):
 
     tap_bridge = ns.TapBridgeHelper()
     tap_bridge.SetAttribute("Mode", ns.StringValue("UseBridge"))
-    tap_bridge.SetAttribute("DeviceName", ns.StringValue("mytap1"))
+    tap_bridge.SetAttribute("DeviceName", ns.StringValue("tap1"))
     tap_bridge.Install(nodes.Get(0), devices.Get(0))
 
-    tap_bridge.SetAttribute("DeviceName", ns.StringValue("mytap2"))
+    tap_bridge.SetAttribute("DeviceName", ns.StringValue("tap2"))
     tap_bridge.Install(nodes.Get(1), devices.Get(1))
+
+    tap_bridge.SetAttribute("DeviceName", ns.StringValue("tap3"))
+    tap_bridge.Install(nodes.Get(2), devices.Get(2))
 
     flowmon_helper = ns.FlowMonitorHelper()
     if enable_flow_monitor:
@@ -52,6 +55,7 @@ def main(argv):
 
     csma.EnablePcap("server_0", devices.Get(0))
     csma.EnablePcap("server_1", devices.Get(1))
+    csma.EnablePcap("server_2", devices.Get(2))
 
     ns.Simulator.Stop(ns.Seconds(60000.0))
     ns.Simulator.Run()
