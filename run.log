@@ -1,0 +1,140 @@
+Done.
+tap1 <-> br-tap1 <-> ens4
+tap2 <-> br-tap2 <-> ens5
+tap3 <-> br-tap3 <-> ens6
+Starting example.py...
+/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/libexec/ns3/tap-creator
+/home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/cppyy/__init__.py:383: UserWarning: CPyCppyy API not found (tried: /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/../../../include/site/python3.12); set CPPYY_API_PATH envar to the 'CPyCppyy' API directory to fix
+  warnings.warn("CPyCppyy API not found (tried: %s); "
+[runStaticInitializersOnce]: Failed to materialize symbols: { (main, { $.cling-module-136.__inits.0, __cxx_global_var_initcling_module_136_, __orc_init_func.cling-module-136, _ZN3ns3L16g_timeInitHelperE, _GLOBAL__sub_I_cling_module_136 }) }
+[runStaticInitializersOnce]: Failed to materialize symbols: { (main, { __orc_init_func.cling-module-136 }) }
+msg="TapBridge::CreateTap(): Back from execlp(), status = -1 errno = No such file or directory", +0.000000000s -1 file=/gcl-builds/src/tap-bridge/model/tap-bridge.cc, line=524
+NS_FATAL, terminating
+terminate called without an active exception
+ *** Break *** abort
+ Generating stack trace...
+ 0x00007f541a141476 in raise + 0x16 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f541a1277f3 in abort + 0xd3 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f5419635b9e in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f541964120c in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f5419641277 in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f540d3955b1 in ns3::TapBridge::CreateTap() at tap-bridge.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-tap-bridge.so
+ 0x00007f540d3998ea in ns3::TapBridge::StartTapDevice() + 0x21a from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-tap-bridge.so
+ 0x00007f540feb6f87 in ns3::RealtimeSimulatorImpl::ProcessOneEvent() at realtime-simulator-impl.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-core.so
+ 0x00007f540feb7764 in ns3::RealtimeSimulatorImpl::Run() at realtime-simulator-impl.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-core.so
+ 0x00007f5412b55963 in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/cppyy_backend/lib/libcppyy_backend.so
+ 0x00007f5412b5604f in Cppyy::CallV(long, void*, unsigned long, void*) at /home/ubuntu/.cache/uv/sdists-v9/pypi/cppyy-backend/1.15.3/t90iLaXsWwQcc0uuzJj9P/src/src/clingwrapper.cxx:1016 from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/cppyy_backend/lib/libcppyy_backend.so
+ 0x00007f54104c54ca in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f541047af4b in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f541047c369 in CPyCppyy::CPPMethod::Execute(void*, long, CPyCppyy::CallContext*) at /home/ubuntu/.cache/uv/sdists-v9/pypi/cpycppyy/1.13.0/9sIkfH5fHKS40J8tsGB3n/src/src/CPPMethod.cxx:970 from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f5410482998 in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00000000018153f1 in _PyEval_EvalFrameDefault + 0x3271 from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001896d60 in PyEval_EvalCode + 0xde from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x00000000018b56c9 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2cb45 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c906 in _PyRun_SimpleFileObject + 0x106 from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c68a in _PyRun_AnyFileObject + 0x4a from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c610 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c51d in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001ae2923 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001987b58 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x000000000198796c in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x00007f541a128d90 in <unknown> from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f541a128e40 in __libc_start_main + 0x80 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00000000019a84a9 in _start + 0x29 from /home/ubuntu/ns3_workspace/.venv/bin/python
+ *** Break *** abort
+ Generating stack trace...
+ 0x00007f541a141476 in raise + 0x16 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f541a1277f3 in abort + 0xd3 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f5419635b9e in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f541964120c in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f5419641277 in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f540d3955b1 in ns3::TapBridge::CreateTap() at tap-bridge.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-tap-bridge.so
+ 0x00007f540d3998ea in ns3::TapBridge::StartTapDevice() + 0x21a from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-tap-bridge.so
+ 0x00007f540feb6f87 in ns3::RealtimeSimulatorImpl::ProcessOneEvent() at realtime-simulator-impl.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-core.so
+ 0x00007f540feb7764 in ns3::RealtimeSimulatorImpl::Run() at realtime-simulator-impl.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-core.so
+ 0x00007f5412b55963 in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/cppyy_backend/lib/libcppyy_backend.so
+ 0x00007f5412b5604f in Cppyy::CallV(long, void*, unsigned long, void*) at /home/ubuntu/.cache/uv/sdists-v9/pypi/cppyy-backend/1.15.3/t90iLaXsWwQcc0uuzJj9P/src/src/clingwrapper.cxx:1016 from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/cppyy_backend/lib/libcppyy_backend.so
+ 0x00007f54104c54ca in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f541047af4b in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f541047c369 in CPyCppyy::CPPMethod::Execute(void*, long, CPyCppyy::CallContext*) at /home/ubuntu/.cache/uv/sdists-v9/pypi/cpycppyy/1.13.0/9sIkfH5fHKS40J8tsGB3n/src/src/CPPMethod.cxx:970 from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f5410482998 in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00000000018153f1 in _PyEval_EvalFrameDefault + 0x3271 from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001896d60 in PyEval_EvalCode + 0xde from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x00000000018b56c9 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2cb45 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c906 in _PyRun_SimpleFileObject + 0x106 from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c68a in _PyRun_AnyFileObject + 0x4a from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c610 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c51d in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001ae2923 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001987b58 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x000000000198796c in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x00007f541a128d90 in <unknown> from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f541a128e40 in __libc_start_main + 0x80 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00000000019a84a9 in _start + 0x29 from /home/ubuntu/ns3_workspace/.venv/bin/python
+aborted. cond="exitStatus != 0", msg="TapBridge::CreateTap(): socket creator exited normally with status 133", +0.000000000s -1 file=/gcl-builds/src/tap-bridge/model/tap-bridge.cc, line=549
+NS_FATAL, terminating
+terminate called without an active exception
+ *** Break *** abort
+ Generating stack trace...
+ 0x00007f541a141476 in raise + 0x16 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f541a1277f3 in abort + 0xd3 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f5419635b9e in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f541964120c in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f5419641277 in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f540d3955b1 in ns3::TapBridge::CreateTap() at tap-bridge.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-tap-bridge.so
+ 0x00007f540d3998ea in ns3::TapBridge::StartTapDevice() + 0x21a from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-tap-bridge.so
+ 0x00007f540feb6f87 in ns3::RealtimeSimulatorImpl::ProcessOneEvent() at realtime-simulator-impl.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-core.so
+ 0x00007f540feb7764 in ns3::RealtimeSimulatorImpl::Run() at realtime-simulator-impl.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-core.so
+ 0x00007f5412b55963 in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/cppyy_backend/lib/libcppyy_backend.so
+ 0x00007f5412b5604f in Cppyy::CallV(long, void*, unsigned long, void*) at /home/ubuntu/.cache/uv/sdists-v9/pypi/cppyy-backend/1.15.3/t90iLaXsWwQcc0uuzJj9P/src/src/clingwrapper.cxx:1016 from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/cppyy_backend/lib/libcppyy_backend.so
+ 0x00007f54104c54ca in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f541047af4b in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f541047c369 in CPyCppyy::CPPMethod::Execute(void*, long, CPyCppyy::CallContext*) at /home/ubuntu/.cache/uv/sdists-v9/pypi/cpycppyy/1.13.0/9sIkfH5fHKS40J8tsGB3n/src/src/CPPMethod.cxx:970 from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f5410482998 in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00000000018153f1 in _PyEval_EvalFrameDefault + 0x3271 from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001896d60 in PyEval_EvalCode + 0xde from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x00000000018b56c9 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2cb45 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c906 in _PyRun_SimpleFileObject + 0x106 from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c68a in _PyRun_AnyFileObject + 0x4a from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c610 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c51d in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001ae2923 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001987b58 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x000000000198796c in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x00007f541a128d90 in <unknown> from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f541a128e40 in __libc_start_main + 0x80 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00000000019a84a9 in _start + 0x29 from /home/ubuntu/ns3_workspace/.venv/bin/python
+ *** Break *** abort
+ Generating stack trace...
+ 0x00007f541a141476 in raise + 0x16 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f541a1277f3 in abort + 0xd3 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f5419635b9e in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f541964120c in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f5419641277 in <unknown> from /lib/x86_64-linux-gnu/libstdc++.so.6
+ 0x00007f540d3955b1 in ns3::TapBridge::CreateTap() at tap-bridge.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-tap-bridge.so
+ 0x00007f540d3998ea in ns3::TapBridge::StartTapDevice() + 0x21a from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-tap-bridge.so
+ 0x00007f540feb6f87 in ns3::RealtimeSimulatorImpl::ProcessOneEvent() at realtime-simulator-impl.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-core.so
+ 0x00007f540feb7764 in ns3::RealtimeSimulatorImpl::Run() at realtime-simulator-impl.cc:? from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/ns3/lib64/libns3.44-core.so
+ 0x00007f5412b55963 in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/cppyy_backend/lib/libcppyy_backend.so
+ 0x00007f5412b5604f in Cppyy::CallV(long, void*, unsigned long, void*) at /home/ubuntu/.cache/uv/sdists-v9/pypi/cppyy-backend/1.15.3/t90iLaXsWwQcc0uuzJj9P/src/src/clingwrapper.cxx:1016 from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/cppyy_backend/lib/libcppyy_backend.so
+ 0x00007f54104c54ca in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f541047af4b in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f541047c369 in CPyCppyy::CPPMethod::Execute(void*, long, CPyCppyy::CallContext*) at /home/ubuntu/.cache/uv/sdists-v9/pypi/cpycppyy/1.13.0/9sIkfH5fHKS40J8tsGB3n/src/src/CPPMethod.cxx:970 from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00007f5410482998 in <unknown> from /home/ubuntu/ns3_workspace/.venv/lib/python3.12/site-packages/libcppyy.cpython-312-x86_64-linux-gnu.so
+ 0x00000000018153f1 in _PyEval_EvalFrameDefault + 0x3271 from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001896d60 in PyEval_EvalCode + 0xde from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x00000000018b56c9 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2cb45 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c906 in _PyRun_SimpleFileObject + 0x106 from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c68a in _PyRun_AnyFileObject + 0x4a from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c610 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001a2c51d in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001ae2923 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x0000000001987b58 in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x000000000198796c in <unknown> from /home/ubuntu/ns3_workspace/.venv/bin/python
+ 0x00007f541a128d90 in <unknown> from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00007f541a128e40 in __libc_start_main + 0x80 from /lib/x86_64-linux-gnu/libc.so.6
+ 0x00000000019a84a9 in _start + 0x29 from /home/ubuntu/ns3_workspace/.venv/bin/python
