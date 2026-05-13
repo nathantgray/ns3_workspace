@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 
     DEBUG("Installing TapBridge on node 0 with tap1");
     TapBridgeHelper tapBridge;
-    tapBridge.SetAttribute("Mode", StringValue("UseBridge"));
+    tapBridge.SetAttribute("Mode", StringValue("UseLocal"));
     tapBridge.SetAttribute("DeviceName", StringValue("tap1"));
     tapBridge.Install(nodes.Get(0), devices.Get(0));
     DEBUG("TapBridge installed on node 0 / tap1");
