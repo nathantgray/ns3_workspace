@@ -17,7 +17,7 @@ using namespace ns3;
 
 NS_LOG_COMPONENT_DEFINE("Tap3VmL2");
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     // Emulation requires real-time scheduling and checksum computation.
     GlobalValue::Bind("SimulatorImplementationType",
@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
     // Optional: pcap on the CSMA side for debugging.
     // csma.EnablePcapAll("tap-3vm-l2", true);
 
-    Simulator::Stop(Seconds(600.0));   // run for 10 minutes; adjust as needed
+    Simulator::Stop(Seconds(600000.0)); // run for 10 minutes; adjust as needed
     Simulator::Run();
     Simulator::Destroy();
     return 0;
