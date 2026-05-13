@@ -69,10 +69,10 @@ int main(int argc, char *argv[])
 
     // Flow monitor
     FlowMonitorHelper flowmonHelper;
+    Ptr<FlowMonitor> flowMonitor;
     if (enableFlowMonitor)
     {
-        flowmonHelper.InstallAll();
-        flowmonHelper.SerializeToXmlFile("NSF.flowmon", false, false);
+        flowMonitor = flowmonHelper.InstallAll();
     }
 
     // PCAP traces for all 3 nodes to match example.py
@@ -82,6 +82,13 @@ int main(int argc, char *argv[])
 
     Simulator::Stop(Seconds(60000.0));
     Simulator::Run();
+
+    // Serialize flow monitor AFTER Run so it contains actual flow data
+    if (enableFlowMonitor)
+    {
+        flowMonitor->SerializeToXmlFile("NSF.flowmon", false, false);
+    }
+
     Simulator::Destroy();
 
     return 0;
