@@ -23,7 +23,7 @@ Updated `scripts/run_example.sh` to:
    ```
 
 ## Testing Status
-✅ Tested on laptop:
+✅ Tested on laptop (WE50488):
 - Script runs without tap-creator errors
 - Simulation starts and runs for extended periods
 - Ready for server deployment
