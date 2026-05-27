@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
-# Tear down any old config
+# Tear down old
 for B in br0 br1 br2 br3; do ip link del "$B" 2>/dev/null || true; done
 for T in tap0 tap1 tap2 tap3; do ip link del "$T" 2>/dev/null || true; done
 
-# Map: real_interface -> "tap bridge"
 declare -A MAP=(
     [ens4]="tap0 br0"     # VM2
+    [ens11]="tap1 br1"    # Shared network (device at 192.168.252.127)
     [ens6]="tap2 br2"     # VM1
-    [ens11]="tap3 br3"    # External network (device at 192.168.252.127)
 )
 
 for IF in "${!MAP[@]}"; do

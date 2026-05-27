@@ -1,15 +1,4 @@
 // scratch/tap-3vm-routed.cc
-//
-// Topology:
-//   - CSMA 0: ghost0 (VM2), ghost3 (external network), internal node 0
-//   - CSMA 1: ghost2 (VM1), internal node 1
-//   - P2P: internal node 0 <-> central <-> internal node 1
-//
-// ghost0 (tap0) bridges VM2's L2 link
-// ghost2 (tap2) bridges VM1's L2 link
-// ghost3 (tap3) bridges the external Shared network (device 192.168.252.127)
-//
-// Run as root: sudo ./ns3 run tap-3vm-routed
 
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"
@@ -22,7 +11,7 @@ using namespace ns3;
 
 NS_LOG_COMPONENT_DEFINE("Tap3VmRouted");
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     GlobalValue::Bind("SimulatorImplementationType",
                       StringValue("ns3::RealtimeSimulatorImpl"));
@@ -34,88 +23,93 @@ int main(int argc, char* argv[])
     // =========================================================
     // Create nodes
     // =========================================================
+    NodeContainer ghosts;
+    ghosts.Create(3);
 
-    // Ghost nodes (hold TapBridge, no active IP role)
-    Ptr<Node> ghost0 = CreateObject<Node>();  // VM2 side
-    Ptr<Node> ghost2 = CreateObject<Node>();  // VM1 side
-    Ptr<Node> ghost3 = CreateObject<Node>();  // External network side
+    NodeContainer internalNodes;
+    internalNodes.Create(3);
 
-    // Internal routing nodes
-    Ptr<Node> internalNode0 = CreateObject<Node>();  // VM2/external subnet
-    Ptr<Node> internalNode1 = CreateObject<Node>();  // VM1 subnet
     Ptr<Node> central = CreateObject<Node>();
 
     // =========================================================
-    // Install IP stacks
+    // Install IP stacks on ALL nodes (including ghosts)
+    // Ghost nodes need the stack for global routing to discover
+    // their subnets and for ARP to function properly.
     // =========================================================
     InternetStackHelper stack;
-    stack.Install(ghost0);
-    stack.Install(ghost2);
-    stack.Install(ghost3);
-    stack.Install(internalNode0);
-    stack.Install(internalNode1);
+    stack.Install(ghosts);
+    stack.Install(internalNodes);
     stack.Install(central);
 
-    // Enable forwarding on routing nodes
-    internalNode0->GetObject<Ipv4>()->SetAttribute("IpForward", BooleanValue(true));
-    internalNode1->GetObject<Ipv4>()->SetAttribute("IpForward", BooleanValue(true));
+    // =========================================================
+    // Enable IP forwarding on internal nodes and central node
+    // =========================================================
+    for (uint32_t i = 0; i < 3; ++i)
+    {
+        internalNodes.Get(i)->GetObject<Ipv4>()->SetAttribute("IpForward", BooleanValue(true));
+    }
     central->GetObject<Ipv4>()->SetAttribute("IpForward", BooleanValue(true));
 
     // =========================================================
-    // CSMA channel 0: ghost0 (VM2) + ghost3 (external) + internalNode0
-    // This is the shared segment for both VM2 and the device
+    // CSMA segments: ghost <-> internal node (one per VM)
     // =========================================================
     CsmaHelper csma;
     csma.SetChannelAttribute("DataRate", StringValue("100Mbps"));
     csma.SetChannelAttribute("Delay", TimeValue(MilliSeconds(0)));
 
-    NodeContainer csma0Nodes;
-    csma0Nodes.Add(ghost0);
-    csma0Nodes.Add(ghost3);
-    csma0Nodes.Add(internalNode0);
-    NetDeviceContainer csma0Devs = csma.Install(csma0Nodes);
-    // csma0Devs: [0]=ghost0, [1]=ghost3, [2]=internalNode0
+    NetDeviceContainer csmaDevs[3]; // each contains {ghost dev, internal dev}
+
+    for (uint32_t i = 0; i < 3; ++i)
+    {
+        NodeContainer pair(ghosts.Get(i), internalNodes.Get(i));
+        csmaDevs[i] = csma.Install(pair);
+    }
 
     // =========================================================
-    // CSMA channel 1: ghost2 (VM1) + internalNode1
-    // =========================================================
-    NodeContainer csma1Nodes;
-    csma1Nodes.Add(ghost2);
-    csma1Nodes.Add(internalNode1);
-    NetDeviceContainer csma1Devs = csma.Install(csma1Nodes);
-    // csma1Devs: [0]=ghost2, [1]=internalNode1
-
-    // =========================================================
-    // Point-to-point: internalNode0 <-> central <-> internalNode1
+    // Point-to-point links: internal node <-> central node
     // =========================================================
     PointToPointHelper p2p;
     p2p.SetDeviceAttribute("DataRate", StringValue("1Gbps"));
     p2p.SetChannelAttribute("Delay", StringValue("2ms"));
 
-    NetDeviceContainer p2p0 = p2p.Install(internalNode0, central);
-    NetDeviceContainer p2p1 = p2p.Install(internalNode1, central);
+    NetDeviceContainer p2pDevs[3];
+
+    for (uint32_t i = 0; i < 3; ++i)
+    {
+        p2pDevs[i] = p2p.Install(internalNodes.Get(i), central);
+    }
 
     // =========================================================
     // Assign IP addresses
     // =========================================================
     Ipv4AddressHelper address;
 
-    // CSMA 0: 10.0.1.0/24
-    // ghost0=.1, ghost3=.3, internalNode0=.2
-    address.SetBase("10.0.1.0", "255.255.255.0", "0.0.0.1");
-    address.Assign(csma0Devs);
+    // CSMA subnets — assign to BOTH ghost and internal node.
+    // Ghost gets .1, internal node gets .2.
+    // VMs will use .10 (or whatever you configure on the real VM).
+    // The ghost's .1 address won't conflict because the TapBridge
+    // operates at L2 and the ghost's IP stack won't actively use it
+    // for traffic — it just makes global routing aware of the subnet.
+    const char *csmaSubnets[3] = {"10.0.1.0", "10.0.2.0", "10.0.3.0"};
 
-    // CSMA 1: 10.0.3.0/24
-    // ghost2=.1, internalNode1=.2
-    address.SetBase("10.0.3.0", "255.255.255.0", "0.0.0.1");
-    address.Assign(csma1Devs);
+    for (uint32_t i = 0; i < 3; ++i)
+    {
+        address.SetBase(Ipv4Address(csmaSubnets[i]),
+                        Ipv4Mask("255.255.255.0"),
+                        Ipv4Address("0.0.0.1"));
+        address.Assign(csmaDevs[i]); // .1 = ghost, .2 = internal node
+    }
 
-    // P2P links
-    address.SetBase("10.0.10.0", "255.255.255.252", "0.0.0.1");
-    address.Assign(p2p0);
+    // P2P subnets between internal nodes and central
+    const char *p2pSubnets[3] = {"10.0.10.0", "10.0.11.0", "10.0.12.0"};
 
-    address.SetBase("10.0.11.0", "255.255.255.252", "0.0.0.1");
-    address.Assign(p2p1);
+    for (uint32_t i = 0; i < 3; ++i)
+    {
+        address.SetBase(Ipv4Address(p2pSubnets[i]),
+                        Ipv4Mask("255.255.255.252"),
+                        Ipv4Address("0.0.0.1"));
+        address.Assign(p2pDevs[i]);
+    }
 
     // =========================================================
     // Populate routing tables
@@ -123,19 +117,18 @@ int main(int argc, char* argv[])
     Ipv4GlobalRoutingHelper::PopulateRoutingTables();
 
     // =========================================================
-    // TapBridges
+    // Attach TapBridges (UseBridge mode) to ghost CSMA devices
     // =========================================================
     TapBridgeHelper tapBridge;
     tapBridge.SetAttribute("Mode", StringValue("UseBridge"));
 
-    tapBridge.SetAttribute("DeviceName", StringValue("tap0"));
-    tapBridge.Install(ghost0, csma0Devs.Get(0));
+    const char *tapNames[3] = {"tap0", "tap1", "tap2"};
 
-    tapBridge.SetAttribute("DeviceName", StringValue("tap3"));
-    tapBridge.Install(ghost3, csma0Devs.Get(1));
-
-    tapBridge.SetAttribute("DeviceName", StringValue("tap2"));
-    tapBridge.Install(ghost2, csma1Devs.Get(0));
+    for (uint32_t i = 0; i < 3; ++i)
+    {
+        tapBridge.SetAttribute("DeviceName", StringValue(tapNames[i]));
+        tapBridge.Install(ghosts.Get(i), csmaDevs[i].Get(0));
+    }
 
     // =========================================================
     // Run
