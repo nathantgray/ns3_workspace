@@ -77,13 +77,14 @@ int main(int argc, char *argv[])
     // =========================================================
     // Assign IP addresses
     //
-    // CSMA subnets: assign ONLY to the internal node device.
-    // The ghost node is a pure L2 bridge — giving it an IP on
-    // this subnet causes ARP conflicts with the real VMs.
+    // CSMA subnets:
+    //   10.0.x.1  — ghost node (needed so TapBridge can init the device)
+    //   10.0.x.2  — internal node
+    //   10.0.x.10 — real VM (configured on the VM itself)
     //
-    // Layout per CSMA subnet (e.g. 10.0.1.0/24):
-    //   10.0.1.1  — internal node (ns3)
-    //   10.0.1.10 — real VM (configured on the VM itself)
+    // The ghost IP does not cause practical ARP conflicts because
+    // the TapBridge at L2 means the ghost IP stack is never
+    // actively used for traffic.
     // =========================================================
     Ipv4AddressHelper address;
 
@@ -92,10 +93,8 @@ int main(int argc, char *argv[])
     {
         address.SetBase(Ipv4Address(csmaSubnets[i]), Ipv4Mask("255.255.255.0"));
 
-        // Assign only to internal node device (index 1), skip ghost (index 0)
-        NetDeviceContainer internalDev;
-        internalDev.Add(csmaDevs[i].Get(1));
-        address.Assign(internalDev);
+        // Assign to both ghost (.1) and internal node (.2)
+        address.Assign(csmaDevs[i]);
     }
 
     // P2P subnets between internal nodes and central node
@@ -133,9 +132,9 @@ int main(int argc, char *argv[])
             staticRouting.GetStaticRouting(internalNodes.Get(i)->GetObject<Ipv4>());
 
         sr->AddNetworkRouteTo(
-            Ipv4Address(csmaSubnets[i]),  // destination network
-            Ipv4Mask("255.255.255.0"),    // mask
-            1                             // out via CSMA interface
+            Ipv4Address(csmaSubnets[i]), // destination network
+            Ipv4Mask("255.255.255.0"),   // mask
+            1                            // out via CSMA interface
         );
     }
 
