@@ -111,6 +111,10 @@ int main(int argc, char *argv[])
     // =========================================================
     Ipv4GlobalRoutingHelper::PopulateRoutingTables();
 
+    Ipv4GlobalRoutingHelper g;
+    Ptr<OutputStreamWrapper> routingStream =
+        Create<OutputStreamWrapper>("routing-tables.txt", std::ios::out);
+    g.PrintRoutingTableAllAt(Seconds(1.0), routingStream);
     // =========================================================
     // Static routes on each internal node toward the VM subnet.
     //
