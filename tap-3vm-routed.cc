@@ -111,8 +111,8 @@ int main(int argc, char *argv[])
         // p2pDevs[i].Get(0) = internal node — gets 10.0.1N.1
         // p2pDevs[i].Get(1) = central node  — gets 10.0.1N.2
         Ipv4InterfaceContainer ifaces = address.Assign(p2pDevs[i]);
-        p2pInternalIfaces[i] = Ipv4InterfaceContainer(ifaces.Get(0));
-        p2pCentralIfaces[i] = Ipv4InterfaceContainer(ifaces.Get(1));
+        p2pInternalIfaces[i].Add(ifaces.Get(0));
+        p2pCentralIfaces[i].Add(ifaces.Get(1));
     }
 
     // =========================================================
