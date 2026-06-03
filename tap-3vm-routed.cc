@@ -82,7 +82,8 @@ int main(int argc, char *argv[])
     //   subnet.2  — internal node
     //   subnet.10 — real VM (configured on the VM itself)
     //
-    // VM1 (tap1/ghost[1]): 192.168.252.0/22
+    // VM1 (tap1/ghost[1]): 192.168.252.0/22, with ns3-assigned
+    // addresses pinned into 192.168.254.x
     // VM0/VM2:             10.0.{1,3}.0/24
     //
     // The ghost IP does not cause practical ARP conflicts because
@@ -93,9 +94,10 @@ int main(int argc, char *argv[])
 
     const char *csmaSubnets[3] = {"10.0.1.0", "192.168.252.0", "10.0.3.0"};
     const char *csmaMasks[3] = {"255.255.255.0", "255.255.252.0", "255.255.255.0"};
+    const char *csmaBases[3] = {"0.0.0.1", "0.0.2.1", "0.0.0.1"};
     for (uint32_t i = 0; i < 3; ++i)
     {
-        address.SetBase(Ipv4Address(csmaSubnets[i]), Ipv4Mask(csmaMasks[i]));
+        address.SetBase(Ipv4Address(csmaSubnets[i]), Ipv4Mask(csmaMasks[i]), Ipv4Address(csmaBases[i]));
 
         // Assign to both ghost (.1) and internal node (.2)
         address.Assign(csmaDevs[i]);
