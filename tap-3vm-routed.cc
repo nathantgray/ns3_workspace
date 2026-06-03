@@ -92,9 +92,10 @@ int main(int argc, char *argv[])
     // =========================================================
     Ipv4AddressHelper address;
 
-    const char *csmaSubnets[3] = {"10.0.1.0", "192.168.252.0", "10.0.3.0"};
-    const char *csmaMasks[3] = {"255.255.255.0", "255.255.252.0", "255.255.255.0"};
-    const char *csmaBases[3] = {"0.0.0.1", "0.0.2.1", "0.0.0.1"};
+    // const char *csmaSubnets[3] = {"10.0.1.0", "192.168.252.0", "10.0.3.0"};
+    const char *csmaSubnets[3] = {"10.0.1.0", "10.0.2.0", "10.0.3.0"};
+    const char *csmaMasks[3] = {"255.255.255.0", "255.255.255.0", "255.255.255.0"};
+    const char *csmaBases[3] = {"0.0.0.1", "0.0.0.1", "0.0.0.1"};
     for (uint32_t i = 0; i < 3; ++i)
     {
         address.SetBase(Ipv4Address(csmaSubnets[i]), Ipv4Mask(csmaMasks[i]), Ipv4Address(csmaBases[i]));
@@ -145,6 +146,55 @@ int main(int argc, char *argv[])
             Ipv4Address(csmaSubnets[i]), // destination network
             Ipv4Mask(csmaMasks[i]),      // mask
             1                            // out via CSMA interface
+        );
+    }
+
+    // =========================================================
+    // Static routes for the external network (192.168.252.0/22)
+    //
+    // internalNodes[0] and [2] send via central (nextHop = central's
+    // P2P address on the respective link: 10.0.10.2 / 10.0.12.2).
+    // internalNodes[1] sends directly out its CSMA interface (interface 1)
+    // toward ghost[1]/tap1, which bridges into the external network.
+    // central forwards to internalNodes[1] via nextHop 10.0.11.1.
+    // =========================================================
+    const char *centralP2pAddrs[3] = {"10.0.10.2", "10.0.11.2", "10.0.12.2"};
+
+    for (uint32_t i = 0; i < 3; ++i)
+    {
+        Ptr<Ipv4StaticRouting> sr =
+            staticRouting.GetStaticRouting(internalNodes.Get(i)->GetObject<Ipv4>());
+
+        if (i == 1)
+        {
+            // internalNodes[1] is directly connected to tap1/external via CSMA
+            sr->AddNetworkRouteTo(
+                Ipv4Address("192.168.252.0"),
+                Ipv4Mask("255.255.252.0"),
+                1 // out via CSMA interface toward ghost[1]/tap1
+            );
+        }
+        else
+        {
+            // internalNodes[0] and [2] reach external via central
+            sr->AddNetworkRouteTo(
+                Ipv4Address("192.168.252.0"),
+                Ipv4Mask("255.255.252.0"),
+                Ipv4Address(centralP2pAddrs[i]), // nextHop = central's P2P address
+                2                                // out via P2P interface toward central
+            );
+        }
+    }
+
+    // central forwards external-bound traffic to internalNodes[1]
+    {
+        Ptr<Ipv4StaticRouting> centralSr =
+            staticRouting.GetStaticRouting(central->GetObject<Ipv4>());
+        centralSr->AddNetworkRouteTo(
+            Ipv4Address("192.168.252.0"),
+            Ipv4Mask("255.255.252.0"),
+            Ipv4Address("10.0.11.1"), // internalNodes[1]'s P2P address
+            2                         // interface 2 = P2P link to internalNodes[1]
         );
     }
 

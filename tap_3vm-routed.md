@@ -6,9 +6,9 @@
 - 3 VMs are each connected to the central ns3-router VM via L2 links.
 - 
 ip -brief link show
-sudo ip addr add 10.0.1.10/24 dev ens4
-sudo ip link set ens4 up
-sudo ip route add default via 10.0.1.2 dev ens4
+sudo ip addr add 10.0.1.10/24 dev ens9
+sudo ip link set ens9 up
+sudo ip route add default via 10.0.1.2 dev ens9
 # Setup on Linux VMs
 
 # Setup on Windows VM
