@@ -78,9 +78,12 @@ int main(int argc, char *argv[])
     // Assign IP addresses
     //
     // CSMA subnets:
-    //   10.0.x.1  — ghost node (needed so TapBridge can init the device)
-    //   10.0.x.2  — internal node
-    //   10.0.x.10 — real VM (configured on the VM itself)
+    //   subnet.1  — ghost node (needed so TapBridge can init the device)
+    //   subnet.2  — internal node
+    //   subnet.10 — real VM (configured on the VM itself)
+    //
+    // VM1 (tap1/ghost[1]): 192.168.252.0/22
+    // VM0/VM2:             10.0.{1,3}.0/24
     //
     // The ghost IP does not cause practical ARP conflicts because
     // the TapBridge at L2 means the ghost IP stack is never
@@ -88,10 +91,11 @@ int main(int argc, char *argv[])
     // =========================================================
     Ipv4AddressHelper address;
 
-    const char *csmaSubnets[3] = {"10.0.1.0", "10.0.2.0", "10.0.3.0"};
+    const char *csmaSubnets[3] = {"10.0.1.0", "192.168.252.0", "10.0.3.0"};
+    const char *csmaMasks[3] = {"255.255.255.0", "255.255.252.0", "255.255.255.0"};
     for (uint32_t i = 0; i < 3; ++i)
     {
-        address.SetBase(Ipv4Address(csmaSubnets[i]), Ipv4Mask("255.255.255.0"));
+        address.SetBase(Ipv4Address(csmaSubnets[i]), Ipv4Mask(csmaMasks[i]));
 
         // Assign to both ghost (.1) and internal node (.2)
         address.Assign(csmaDevs[i]);
@@ -137,7 +141,7 @@ int main(int argc, char *argv[])
 
         sr->AddNetworkRouteTo(
             Ipv4Address(csmaSubnets[i]), // destination network
-            Ipv4Mask("255.255.255.0"),   // mask
+            Ipv4Mask(csmaMasks[i]),      // mask
             1                            // out via CSMA interface
         );
     }
