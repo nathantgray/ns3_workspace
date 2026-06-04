@@ -136,18 +136,18 @@ int main(int argc, char *argv[])
     //   1 — CSMA (toward ghost / VM)
     //   2 — P2P (toward central)
     // =========================================================
-    Ipv4StaticRoutingHelper staticRouting;
-    for (uint32_t i = 0; i < 3; ++i)
-    {
-        Ptr<Ipv4StaticRouting> sr =
-            staticRouting.GetStaticRouting(internalNodes.Get(i)->GetObject<Ipv4>());
+    // Ipv4StaticRoutingHelper staticRouting;
+    // for (uint32_t i = 0; i < 3; ++i)
+    // {
+    //     Ptr<Ipv4StaticRouting> sr =
+    //         staticRouting.GetStaticRouting(internalNodes.Get(i)->GetObject<Ipv4>());
 
-        sr->AddNetworkRouteTo(
-            Ipv4Address(csmaSubnets[i]), // destination network
-            Ipv4Mask(csmaMasks[i]),      // mask
-            1                            // out via CSMA interface
-        );
-    }
+    //     sr->AddNetworkRouteTo(
+    //         Ipv4Address(csmaSubnets[i]), // destination network
+    //         Ipv4Mask(csmaMasks[i]),      // mask
+    //         1                            // out via CSMA interface
+    //     );
+    // }
 
     // =========================================================
     // Static routes for the external network (192.168.252.0/22)
