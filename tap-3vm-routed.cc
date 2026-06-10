@@ -92,10 +92,10 @@ int main(int argc, char *argv[])
     // =========================================================
     Ipv4AddressHelper address;
 
-    // const char *csmaSubnets[3] = {"10.0.1.0", "192.168.252.0", "10.0.3.0"};
-    const char *csmaSubnets[3] = {"10.0.1.0", "10.0.2.0", "10.0.3.0"};
+    const char *csmaSubnets[3] = {"10.0.1.0", "192.168.252.0", "10.0.3.0"};
+    // const char *csmaSubnets[3] = {"10.0.1.0", "10.0.2.0", "10.0.3.0"};
     const char *csmaMasks[3] = {"255.255.255.0", "255.255.255.0", "255.255.255.0"};
-    const char *csmaBases[3] = {"0.0.0.1", "0.0.0.1", "0.0.0.1"};
+    const char *csmaBases[3] = {"0.0.0.1", "0.0.254.1", "0.0.0.1"};
     for (uint32_t i = 0; i < 3; ++i)
     {
         address.SetBase(Ipv4Address(csmaSubnets[i]), Ipv4Mask(csmaMasks[i]), Ipv4Address(csmaBases[i]));
